@@ -1,0 +1,15 @@
+
+ps,D,Cheesy Wedges,1,8.9,Sat Jun 15 17:07:16 2024
+ps,D,Macho Meat Lover Pizza,1,23,Sat Jun 15 17:21:52 2024
+ps,D,Espresso,1,2.5,Sat Jun 15 17:21:52 2024
+ps,D,Cheesy Wedges,1,8.9,Sat Jun 15 17:31:13 2024
+ps,D,Veggie burger,1,20,Sat Jun 15 17:31:13 2024
+ps,D,Jumbo Deluxe Pizza,1,24,Sat Jun 15 17:34:17 2024
+ps,D,Turkey burger,1,25,Sat Jun 15 17:34:17 2024
+ps,t,Macho Meat Lover Pizza,1,23,Sat Jun 15 19:14:10 2024
+ps,t,Coffee,1,3,Sat Jun 15 19:14:10 2024
+ps,t,Veggie burger,1,20,Sat Jun 15 19:14:10 2024
+ps,t,Juice,1,3.5,Sat Jun 15 19:14:10 2024
+ps,D,Veggie burger,1,20,Sat Jun 15 19:22:09 2024
+ps,D,Tea,1,2,Sat Jun 15 19:22:09 2024
+ps,D,Turkey burger,1,25,Sat Jun 15 19:22:09 2024

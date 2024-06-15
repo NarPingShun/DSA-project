@@ -15,14 +15,16 @@
 
 using namespace std;
 
-struct MenuItem {
+struct MenuItem 
+{
     string code;
     string name;
     string category;
     double price;
 };
 
-struct OrderItem {
+struct OrderItem 
+{
     string item;
     int quantity;
     double price;
@@ -31,7 +33,8 @@ struct OrderItem {
     string dineOption; 
 };
 
-struct Order {
+struct Order 
+{
     string customerName;
     string dineOption;
     string foodDetails;
@@ -48,22 +51,28 @@ struct Order {
 
 
 
-class SearchItem {
+class SearchItem 
+{
 public:
     static vector<MenuItem> searchByPriceRange(const vector<MenuItem>& menu, double minPrice, double maxPrice) {
         vector<MenuItem> result;
-        for (const auto& item : menu) {
-            if (item.price >= minPrice && item.price <= maxPrice) {
+        for (const auto& item : menu) 
+		{
+            if (item.price >= minPrice && item.price <= maxPrice) 
+			{
                 result.push_back(item);
             }
         }
         return result;
     }
 
-    static vector<MenuItem> searchByCategory(const vector<MenuItem>& menu, const string& category) {
+    static vector<MenuItem> searchByCategory(const vector<MenuItem>& menu, const string& category) 
+	{
         vector<MenuItem> result;
-        for (const auto& item : menu) {
-            if (item.category == category) {
+        for (const auto& item : menu) 
+		{
+            if (item.category == category) 
+			{
                 result.push_back(item);
             }
         }
@@ -71,10 +80,13 @@ public:
     }
 
     // Overloaded search function for searching by name
-    static vector<MenuItem> searchByName(const vector<MenuItem>& menu, const string& name) {
+    static vector<MenuItem> searchByName(const vector<MenuItem>& menu, const string& name) 
+	{
         vector<MenuItem> result;
-        for (const auto& item : menu) {
-            if (item.name == name) {
+        for (const auto& item : menu) 
+		{
+            if (item.name == name) 
+			{
                 result.push_back(item);
             }
         }
@@ -82,10 +94,13 @@ public:
     }
 
     // Overloaded search function for searching by code
-    static vector<MenuItem> searchByCode(const vector<MenuItem>& menu, const string& code) {
+    static vector<MenuItem> searchByCode(const vector<MenuItem>& menu, const string& code) 
+	{
         vector<MenuItem> result;
-        for (const auto& item : menu) {
-            if (item.code == code) {
+        for (const auto& item : menu) 
+		{
+            if (item.code == code) 
+			{
                 result.push_back(item);
             }
         }
@@ -93,24 +108,33 @@ public:
     }
 };
 
-class Algorithm {
+class Algorithm 
+{
 public:
-    static void bubbleSortMenuByName(vector<MenuItem>& menu) {
+    static void bubbleSortMenuByName(vector<MenuItem>& menu) 
+	{
         int n = menu.size();
-        for (int i = 0; i < n - 1; ++i) {
-            for (int j = 0; j < n - i - 1; ++j) {
-                if (menu[j].name > menu[j + 1].name) {
+        for (int i = 0; i < n - 1; ++i) 
+		{
+            for (int j = 0; j < n - i - 1; ++j) 
+			{
+                if (menu[j].name > menu[j + 1].name) 
+				{
                     swap(menu[j], menu[j + 1]);
                 }
             }
         }
     }
 
-    static void bubbleSortMenuByPrice(vector<MenuItem>& menu) {
+    static void bubbleSortMenuByPrice(vector<MenuItem>& menu) 
+	{
     int n = menu.size();
-    for (int i = 0; i < n - 1; ++i) {
-        for (int j = 0; j < n - i - 1; ++j) {
-            if (menu[j].price < menu[j + 1].price) {  // Change comparison to <
+    for (int i = 0; i < n - 1; ++i) 
+	{
+        for (int j = 0; j < n - i - 1; ++j) 
+		{
+            if (menu[j].price < menu[j + 1].price) 
+			{  // Change comparison to <
                 swap(menu[j], menu[j + 1]);
             }
         }
@@ -120,7 +144,8 @@ public:
 };
 
 // Base class
-class User {
+class User 
+{
 protected:
     string username;
     string password;
@@ -128,25 +153,30 @@ public:
     User(const string& u, const string& p) : username(u), password(p) {}
 
     // Virtual login function
-    virtual bool login(const string& u, const string& p) {
+    virtual bool login(const string& u, const string& p) 
+	{
         return username == u && password == p;
     }
 
     friend void displayUserDetails(const User& user);
 };
 
-void displayUserDetails(const User& user) {
+void displayUserDetails(const User& user) 
+{
     cout << "Username: " << user.username << endl;
 }
 
 // Derived class for Customer
-class Customer : public User {
+class Customer : public User 
+{
 public:
     Customer(const string& u, const string& p) : User(u, p) {}
 
     // Overridden login function
-    bool login(const string& u, const string& p) override {
-        if (User::login(u, p)) {
+    bool login(const string& u, const string& p) override 
+	{
+        if (User::login(u, p)) 
+		{
             cout << "Customer login successful" << endl;
             return true;
         }
@@ -156,12 +186,15 @@ public:
 };
 
 // Derived class for Admin
-class Admin : public User {
+class Admin : public User 
+{
 public:
     Admin(const string& u, const string& p) : User(u, p) {}
 
-    bool login(const string& u, const string& p) override {
-        if (User::login(u, p)) {
+    bool login(const string& u, const string& p) override 
+	{
+        if (User::login(u, p)) 
+		{
             cout << "Admin login successful" << endl;
             return true;
         }
@@ -169,48 +202,60 @@ public:
         return false;
     }
     
-    MenuItem getMenuItemDetails(const string& code, const map<string, MenuItem>& menuMap) {
-    if (menuMap.find(code) != menuMap.end()) {
-        return menuMap.at(code);
-    } else {
-        // Return a default MenuItem or throw an exception if needed
-        return MenuItem(); // Replace with appropriate handling as per your design
-    }
-}
+    MenuItem getMenuItemDetails(const string& code, const map<string, MenuItem>& menuMap) 
+	{
+	    if (menuMap.find(code) != menuMap.end()) 
+		{
+	        return menuMap.at(code);
+	    } 
+		else 
+		{
+	        // Return a default MenuItem or throw an exception if needed
+	        return MenuItem(); // Replace with appropriate handling as per your design
+	    }
+	}
     
 
-    void addMenuItem(vector<MenuItem>& menu, const MenuItem& item) {
+    void addMenuItem(vector<MenuItem>& menu, const MenuItem& item) 
+	{
         menu.push_back(item);
     }
 
-    void removeMenuItem(vector<MenuItem>& menu, const string& code) {
+    void removeMenuItem(vector<MenuItem>& menu, const string& code) 
+	{
         auto it = remove_if(menu.begin(), menu.end(), [&](const MenuItem& item) { return item.code == code; });
         menu.erase(it, menu.end());
     }
 
-    void editMenuItem(vector<MenuItem>& menu, map<string, MenuItem>& menuMap, const string& code) {
-        for (auto& item : menu) {
-            if (item.code == code) {
+    void editMenuItem(vector<MenuItem>& menu, map<string, MenuItem>& menuMap, const string& code) 
+	{
+        for (auto& item : menu) 
+		{
+            if (item.code == code) 
+			{
                 cout << "Editing item with code: " << code << endl;
                 cout << "Enter new name (or press enter to keep current): ";
                 string newName;
                 cin.ignore();
                 getline(cin, newName);
-                if (!newName.empty()) {
+                if (!newName.empty()) 
+				{
                     item.name = newName;
                 }
 
                 cout << "Enter new category (or press enter to keep current): ";
                 string newCategory;
                 getline(cin, newCategory);
-                if (!newCategory.empty()) {
+                if (!newCategory.empty()) 
+				{
                     item.category = newCategory;
                 }
 
                 cout << "Enter new price (or press enter to keep current): ";
                 string priceStr;
                 getline(cin, priceStr);
-                if (!priceStr.empty()) {
+                if (!priceStr.empty()) 
+				{
                     item.price = stod(priceStr);
                 }
 
@@ -223,14 +268,17 @@ public:
         }
     }
 
-    void saveMenuToFile(const vector<MenuItem>& menu) {
+    void saveMenuToFile(const vector<MenuItem>& menu) 
+	{
         ofstream menuFile("menu.txt");
-        if (!menuFile) {
+        if (!menuFile) 
+		{
             cerr << "Failed to open menu.txt" << endl;
             return;
         }
 
-        for (const auto& item : menu) {
+        for (const auto& item : menu) 
+		{
             menuFile << item.code << "," << item.name << "," << item.category << "," << item.price << endl;
         }
 
@@ -242,27 +290,33 @@ public:
 };
 
 
-void displayAdminDetails(const Admin& admin) {
+void displayAdminDetails(const Admin& admin) 
+{
     cout << "Admin Username: " << admin.username << endl;
 }
 
-class FastFoodOrderingSystem {
+class FastFoodOrderingSystem 
+{
 private:
     vector<MenuItem> menu;
     map<string, MenuItem> menuMap;
     vector<MenuItem> originalMenu;
     vector<OrderItem> orders;
     stack<string> orderHistory; // Stack to store order history
+    string customerName;
 
-    void loadMenu() {
+    void loadMenu() 
+	{
         ifstream menuFile("menu.txt");
-        if (!menuFile) {
+        if (!menuFile) 
+		{
             cerr << "Failed to open menu.txt" << endl;
             exit(1);
         }
 
         string line;
-        while (getline(menuFile, line)) {
+        while (getline(menuFile, line)) 
+		{
             MenuItem item;
             size_t pos = 0;
             pos = line.find(',');
@@ -287,14 +341,16 @@ private:
         menuFile.close();
     }
 
-    void displayMenu(const vector<MenuItem>& menu) {
+    void displayMenu(const vector<MenuItem>& menu) 
+	{
         cout << "-----------------------------------------------------------------------------"
              << endl;
         cout << "Food code | Food name                          | Food type       | Food Price" << endl;
         cout << "-----------------------------------------------------------------------------"
              << endl;
 
-        for (const auto& item : menu) {
+        for (const auto& item : menu) 
+		{
             cout << setw(9) << left << item.code << " | "
                  << setw(33) << left << item.name << " | "
                  << setw(14) << left << item.category << " | RM "
@@ -304,53 +360,39 @@ private:
         cout << "-----------------------------------------------------------------------------" << endl;
     }
 
-    void displayOrderSummary() 
+    
+	void recordOrder(const string& customerName, const string& dineOption) 
 	{
-    	system("cls");
-		cout << "------------------------------------------" << endl;
-        cout << "Receipt:" << endl;
-        cout << "------------------------------------------" << endl;
-        for (const auto& order : orders) 
+	    ofstream orderFile("orders.txt", ios::app);
+	    if (!orderFile) 
 		{
-            cout << setw(25) << left << order.item << " x"
-                 << setw(5) << right << order.quantity << "  RM "
-                 << fixed << setprecision(2) << order.price << endl;
-        }
-        cout << "------------------------------------------" << endl;
-        cout << "Total Price: \t\t\tRM " << calculateTotalPrice() << endl;
-        cout << "------------------------------------------\n" << endl;
+	        cerr << "Failed to open orders.txt" << endl;
+	        return;
+	    }
 
-    }
-    
-        
-    
-	void recordOrder(const string& customerName, const string& dineOption) {
-    ofstream orderFile("orders.txt", ios::app);
-    if (!orderFile) {
-        cerr << "Failed to open orders.txt" << endl;
-        return;
-    }
+	    auto now = chrono::system_clock::now();
+	    time_t orderTime = chrono::system_clock::to_time_t(now);
 
-    auto now = chrono::system_clock::now();
-    time_t orderTime = chrono::system_clock::to_time_t(now);
+	    // Write each order to file
+	    for (const auto& order : orders) 
+		{
+	        orderFile << customerName << "," << dineOption << "," << order.item << "," << order.quantity << "," << order.price << "," << ctime(&orderTime);
+	        // Add order details to order history
+	        orderHistory.push(order.item + " x " + to_string(order.quantity) + " RM " + to_string(order.price));
+	    }
+	
+	    // Calculate total price after writing orders to file
+	    double totalPrice = calculateTotalPrice();
+	
+	
+	    orderFile.close();
+	}
 
-    // Write each order to file
-    for (const auto& order : orders) {
-        orderFile << customerName << "," << dineOption << "," << order.item << "," << order.quantity << "," << order.price << "," << ctime(&orderTime);
-        // Add order details to order history
-        orderHistory.push(order.item + " x " + to_string(order.quantity) + " RM " + to_string(order.price));
-    }
-
-    // Calculate total price after writing orders to file
-    double totalPrice = calculateTotalPrice();
-
-
-    orderFile.close();
-}
-
-void searchOrderByCustomerName() {
+void searchOrderByCustomerName() 
+{
     ifstream orderFile("history.txt");
-    if (!orderFile) {
+    if (!orderFile) 
+	{
         cerr << "Failed to open history.txt" << endl;
         return;
     }
@@ -359,7 +401,8 @@ void searchOrderByCustomerName() {
     string line;
 
     // Build the hash map
-    while (getline(orderFile, line)) {
+    while (getline(orderFile, line)) 
+	{
         stringstream ss(line);
         string customerName, dineOption, foodDetails, orderTime;
         int quantity;
@@ -386,12 +429,18 @@ void searchOrderByCustomerName() {
     cin.ignore();
     getline(cin, searchName);
 
-    if (orderMap.find(searchName) != orderMap.end()) {
+    if (orderMap.find(searchName) != orderMap.end()) 
+	{
+    	cout << "----------------------------------------------------------------------------------------------------------------" << endl;
         cout << "Order History for " << searchName << ":" << endl;
         cout << "----------------------------------------------------------------------------------------------------------------" << endl;
-        cout << setw(20) << left << "Dine Option" << setw(30) << left << "Food Details" << setw(10) << left << "Quantity" << setw(10) << left << "Price" << "Order Time" << endl;
+        cout << setw(20) << left << "Dine Option" 
+		<< setw(30) << left << "Food Details" 
+		<< setw(10) << left << "Quantity" 
+		<< setw(10) << left << "Price" << "Order Time" << endl;
 
-        for (const auto& order : orderMap[searchName]) {
+        for (const auto& order : orderMap[searchName]) 
+		{
             stringstream ss(order);
             string dineOption, foodDetails, orderTime;
             int quantity;
@@ -408,13 +457,16 @@ void searchOrderByCustomerName() {
             cout << setw(20) << left << (dineOption == "t" ? "Take away" : "Dine in") << setw(30) << left << foodDetails << setw(10) << left << quantity << setw(10) << left << fixed << setprecision(2) << price << orderTime << endl;
         }
         cout << "----------------------------------------------------------------------------------------------------------------" << endl;
-    } else {
+    } 
+	else 
+	{
         cout << "No order history found for customer: " << searchName << endl;
     }
 }
 
 
-void merge(vector<Order> &arr, int left, int mid, int right) {
+void merge(vector<Order> &arr, int left, int mid, int right) 
+{
     int n1 = mid - left + 1;
     int n2 = right - mid;
 
@@ -427,31 +479,38 @@ void merge(vector<Order> &arr, int left, int mid, int right) {
         R[i] = arr[mid + 1 + i];
 
     int i = 0, j = 0, k = left;
-    while (i < n1 && j < n2) {
-        if (L[i] < R[j]) {
+    while (i < n1 && j < n2) 
+	{
+        if (L[i] < R[j]) 
+		{
             arr[k] = L[i];
             i++;
-        } else {
+        } 
+		else 
+		{
             arr[k] = R[j];
             j++;
         }
         k++;
     }
 
-    while (i < n1) {
+    while (i < n1) 
+	{
         arr[k] = L[i];
         i++;
         k++;
     }
 
-    while (j < n2) {
+    while (j < n2) 
+	{
         arr[k] = R[j];
         j++;
         k++;
     }
 }
 
-void mergeSort(vector<Order> &arr, int left, int right) {
+void mergeSort(vector<Order> &arr, int left, int right) 
+{
     if (left >= right)
         return;
     
@@ -461,9 +520,11 @@ void mergeSort(vector<Order> &arr, int left, int right) {
     merge(arr, left, mid, right);
 }
 
-void viewOrderHistory() {
+void viewOrderHistory() 
+{
     ifstream orderFile("history.txt");
-    if (!orderFile) {
+    if (!orderFile) 
+	{
         cerr << "Failed to open history.txt" << endl;
         return;
     }
@@ -471,7 +532,8 @@ void viewOrderHistory() {
     vector<Order> orders;
     string line;
 
-    while (getline(orderFile, line)) {
+    while (getline(orderFile, line)) 
+	{
         stringstream ss(line);
         Order order;
 
@@ -490,12 +552,15 @@ void viewOrderHistory() {
         orders.push_back(order);
     }
     orderFile.close();
-
+    cout << "-----------------------------------------------------------------------------------------------------------------------------------" << endl;
     cout << "Order History:" << endl;
     cout << "-----------------------------------------------------------------------------------------------------------------------------------" << endl;
-    cout << setw(20) << left << "Customer name" << setw(15) << left << "Dine Option" << setw(30) << left << "Food Details" << setw(10) << left << "Quantity" << setw(10) << left << "Price" << setw(15) << left << "Total Price" << "Order Time" << endl;
+    cout << setw(20) << left << "Customer name" << setw(15) << left << "Dine Option" 
+	<< setw(30) << left << "Food Details" << setw(10) << left << "Quantity" 
+	<< setw(10) << left << "Price" << setw(15) << left << "Total Price" << "Order Time" << endl;
 
-    for (const auto &order : orders) {
+    for (const auto &order : orders) 
+	{
         cout << setw(20) << left << order.customerName
              << setw(15) << left << (order.dineOption == "t" ? "Take away" : "Dine in")
              << setw(30) << left << order.foodDetails
@@ -507,7 +572,8 @@ void viewOrderHistory() {
 
     cout << "-----------------------------------------------------------------------------------------------------------------------------------" << endl;
 
-    while (true) {
+    while (true) 
+	{
         cout << "Choose an option:" << endl;
         cout << "1. Search order by customer name" << endl;
         cout << "2. Sort orders by latest order time" << endl;
@@ -516,11 +582,15 @@ void viewOrderHistory() {
         int adminChoice;
         cin >> adminChoice;
 
-        if (adminChoice == 1) {
+        if (adminChoice == 1) 
+		{
             searchOrderByCustomerName(); // Assuming this function is defined elsewhere
-        } else if (adminChoice == 2) {
+        } 
+		else if (adminChoice == 2) 
+		{
         	system("cls");
             mergeSort(orders, 0, orders.size() - 1);
+            cout << "-----------------------------------------------------------------------------------------------------------------------------------" << endl;
             cout << "Sorted Order History:" << endl;
             cout << "-----------------------------------------------------------------------------------------------------------------------------------" << endl;
             cout << setw(20) << left << "Customer name" 
@@ -530,7 +600,8 @@ void viewOrderHistory() {
 			<< setw(10) << left << "Price" 
 			<< setw(15) << left << "Total Price" << "Order Time" << endl;
 
-            for (const auto &order : orders) {
+            for (const auto &order : orders) 
+			{
                 cout << setw(20) << left << order.customerName
                      << setw(15) << left << (order.dineOption == "t" ? "Take away" : "Dine in")
                      << setw(30) << left << order.foodDetails
@@ -540,19 +611,25 @@ void viewOrderHistory() {
                      << order.orderTime << endl;
             }
             cout << "-----------------------------------------------------------------------------------------------------------------------------------" << endl;
-        } else if (adminChoice == 3) {
+        } 
+		else if (adminChoice == 3) 
+		{
             break;
-        } else {
+        } 
+		else 
+		{
             cout << "Invalid choice! Please try again." << endl;
         }
     }
 }
 
 
-    void simulateLoading() {
+    void simulateLoading() 
+	{
         cout << "Processing";
         
-        for (int i = 0; i < 3; ++i) {
+        for (int i = 0; i < 3; ++i) 
+		{
             cout << ".";
             this_thread::sleep_for(chrono::milliseconds(500));
         }
@@ -562,7 +639,8 @@ void viewOrderHistory() {
     
     	
 
-    void userRegistration() {
+    void userRegistration() 
+	{
         system("cls");
         cout << "******************************************" << endl;
         cout << "                Register page              " << endl;
@@ -576,10 +654,13 @@ void viewOrderHistory() {
         cin >> password;
         cout << "Confirm your password: ";
         cin >> confirmPassword;
+        
 
-        if (password == confirmPassword) {
+        if (password == confirmPassword) 
+		{
             ofstream userFile("users.txt", ios::app);
-            if (!userFile) {
+            if (!userFile) 
+			{
                 cerr << "Failed to open users.txt" << endl;
                 return;
             }
@@ -589,7 +670,8 @@ void viewOrderHistory() {
 
             // Log registration details with time and date
             ofstream registerLogFile("register.txt", ios::app);
-            if (!registerLogFile) {
+            if (!registerLogFile) 
+			{
                 cerr << "Failed to open register.txt" << endl;
                 return;
             }
@@ -602,63 +684,153 @@ void viewOrderHistory() {
 
             simulateLoading();
             cout << "Register successful........." << endl;
-        } else {
+        } 
+		else 
+		{
             cout << "Passwords do not match. Please try again." << endl;
         }
     }
 
-    bool userLogin() {
-        system("cls");
-        cout << "******************************************" << endl;
-        cout << "                Login page                " << endl;
-        cout << "******************************************" << endl;
+    bool userLogin() 
+	{
+	    system("cls");
+	    cout << "******************************************" << endl;
+	    cout << "                Login page                " << endl;
+	    cout << "******************************************" << endl;
+	
+	    string username, password;
+	    cout << "Enter your username: ";
+	    cin >> username;
+	    
+	    ifstream userFile("users.txt");
+	    if (!userFile) 
+	    {
+	        cerr << "Failed to open users.txt" << endl;
+	        return false;
+	    }
+	
+	    string line;
+	    bool userFound = false;
+	    string filePassword;
+	    while (getline(userFile, line)) 
+	    {
+	        size_t pos = line.find(',');
+	        string fileUsername = line.substr(0, pos);
+	        filePassword = line.substr(pos + 1);
+	
+	        if (username == fileUsername) 
+	        {
+	            userFound = true;
+	            break;
+	        }
+	    }
+	
+	    if (!userFound) 
+	    {
+	        userFile.close();
+	        simulateLoading();
+	        cout << "Login failed. Username not found." << endl;
+	        return false;
+	    }
+	
+	    userFile.close();
+	
+	    while (true) 
+	    {
+	        cout << "Enter your password: ";
+	        cin >> password;
+	
+	        if (password == filePassword) 
+	        {
+	            simulateLoading();
+	            system("cls");
+	            cout << "Login successful......" << endl;
+	            return true;
+	        } 
+	        else 
+	        {
+	            cout << "Invalid password. Please enter again your password: " << endl;
+	        }
+	    }
+	}
 
-        string username, password;
-        cout << "Enter your username: ";
-        cin >> username;
-        cout << "Enter your password: ";
-        cin >> password;
 
-        ifstream userFile("users.txt");
-        if (!userFile) {
-            cerr << "Failed to open users.txt" << endl;
-            return false;
+
+    
+    void displayOrderSummary() 
+	{
+    	system("cls");
+		cout << "------------------------------------------" << endl;
+        cout << "Receipt:" << endl;
+        cout << "------------------------------------------" << endl;
+        for (const auto& order : orders) 
+		{
+            cout << setw(25) << left << order.item << " x"
+                 << setw(5) << right << order.quantity << "  RM "
+                 << fixed << setprecision(2) << order.price << endl;
         }
-
-        string line;
-        while (getline(userFile, line)) {
-            size_t pos = line.find(',');
-            string fileUsername = line.substr(0, pos);
-            string filePassword = line.substr(pos + 1);
-
-            if (username == fileUsername && password == filePassword) {
-                userFile.close();
-                simulateLoading();
-                system("cls");
-                cout << "Login successful......" << endl;
-                return true;
-            }
-        }
-
-        userFile.close();
-        simulateLoading();
-        cout << "Login failed. Please check your username and password." << endl;
-        return false;
+        cout << "------------------------------------------" << endl;
+        cout << "Total Price: \t\t\tRM " << calculateTotalPrice() << endl;
+        cout << "------------------------------------------\n" << endl;
+		
+		saveReceiptToFile();
     }
 
-    double calculateTotalPrice() {
+    double calculateTotalPrice() 
+	{
         double totalPrice = 0.0;
-        for (size_t i = 0; i < orders.size(); i++) {
+        for (size_t i = 0; i < orders.size(); i++) 
+		{
             totalPrice += orders[i].price * orders[i].quantity;
         }
         return totalPrice;
     }
+    
+    	void saveReceiptToFile() 
+		{
+	        ofstream receiptFile("receipt.txt");
+	        if (!receiptFile) 
+			{
+	            cerr << "Failed to open receipt.txt" << endl;
+	            return;
+        	}
+        
+		    	time_t now = time(0);
+		        tm *ltm = localtime(&now);
+		        stringstream dateTime;
+		        dateTime << 1900 + ltm->tm_year << "-"
+		                 << 1 + ltm->tm_mon << "-"
+		                 << ltm->tm_mday << " "
+		                 << ltm->tm_hour << ":"
+		                 << ltm->tm_min << ":"
+		                 << ltm->tm_sec;
 
+		        receiptFile << "Date: " << dateTime.str() << endl;
+				receiptFile << "Time: " << dateTime.str() << endl;
+		    	receiptFile << "------------------------------------------" << endl;
+		        receiptFile << "Receipt:" << endl;
+		        receiptFile << "------------------------------------------" << endl;
+		        for (const auto& order : orders) 
+				{
+		            receiptFile << setw(25) << left << order.item << " x"
+		                        << setw(5) << right << order.quantity << "  RM "
+		                        << fixed << setprecision(2) << order.price << endl;
+		        }
+		        receiptFile << "------------------------------------------" << endl;
+		        receiptFile << "Total Price: \t\t\tRM " << calculateTotalPrice() << endl;
+		        receiptFile << "------------------------------------------\n" << endl;
+		
+		        receiptFile.close();
+    	}
+    
+    
 public:
-    void startOrdering() {
+    void startOrdering() 
+	{
         loadMenu();
 
-        while (true) {
+        while (true) 
+		{
             system("cls");
             cout << "*******************************************" << endl;
             cout << "  Welcome to Fast Food Ordering system  " << endl;
@@ -671,22 +843,28 @@ public:
             int choice;
             cin >> choice;
 
-            if (choice == 2) {
+            if (choice == 2) 
+			{
                 userRegistration();
-            } else if (choice == 1) {
-                if (userLogin()) {
-                string customerName;  // Declare customerName variable
-                cout << "Enter your name: ";
-                cin.ignore();
-                getline(cin, customerName);  // Capture the customer's name
-                
+            } 
+			else if (choice == 1) 
+			{
+                if (userLogin()) 
+				{
+	                string customerName;  // Declare customerName variable
+	                cout << "Enter your name: ";
+	                cin.ignore();
+	                getline(cin, customerName);  // Capture the customer's name
+	                
                     string dineOption;
-                    cout << "Do you want to (e = Eat in  t = Take away): ";
+                    cout << "Do you want to (D = Dine in  T = Take away): ";
                     cin >> dineOption;
-                    while (dineOption != "e" && dineOption != "E" && dineOption != "t" && dineOption != "T") {
-                    cout << "Invalid choice! Please type again: ";
-                    cin >> dineOption;
-                }
+                    while (dineOption != "D" && dineOption != "d" && dineOption != "t" && dineOption != "T") 
+					{
+	                    cout << "Invalid choice! Please type again: ";
+	                    cin >> dineOption;
+                	}
+                	
                     system("cls");
 
                     cout << "****************************************************************************" << endl;
@@ -707,9 +885,12 @@ public:
 
 						
 						if(menuChoice == 1)
-						{		system("cls");
+						{		
+								system("cls");
+						        cout << "******************************************" << endl;
 								cout << "1. Sort menu by name" << endl;
 	                        	cout << "2. Sort menu by price" << endl;
+        						cout << "******************************************" << endl;
 	                        	
 	                        	cout << "Enter your choice: ";
 	                        	int userchoice;
@@ -717,22 +898,22 @@ public:
 	                        	if (userchoice == 1) 
 								{
 		                            Algorithm::bubbleSortMenuByName(menu);
-		                            displayMenu(menu);
-		                            menu = originalMenu;
+		                            
 		                        } 
 								else if (userchoice == 2) 
 								{
 		                            Algorithm::bubbleSortMenuByPrice(menu);
-		                            displayMenu(menu);
-		                            menu = originalMenu;
+		                            
 								}
 						}
                         else if(menuChoice == 2)
                         {
                         	system("cls");
+                        	cout << "******************************************" << endl;
                         	cout << "1. Search food by price range" << endl;
                         	cout << "2. Search food by food type" << endl;
-                        	
+                        	cout << "******************************************" << endl;
+
                         	cout << "Enter your choice: ";
 	                        int userchoice;
 	                        cin >> userchoice;
@@ -771,42 +952,41 @@ public:
 									   	{
 			                    			cout << "Invalid choice! Please try again." << endl;
 			                			}
-		                		}
+		                			}
+								}
 		                } 
 						else if (menuChoice == 2) 
 						{
-            				string category;
-            				cout << "Enter food type (burger/pizza/cake/snack): ";
-            				cin >> category;
-            				while (true) 
+			            	string category;
+			            	cout << "Enter food type (burger/pizza/cake/snack): ";
+			            	cin >> category;
+			            	while (true) 
 							{
-                				vector<MenuItem> results = SearchItem::searchByCategory(menu, category);
-                				displayMenu(results);
-
-                				cout << "1. Continue searching" << endl;
-                				cout << "2. Back to menu" << endl;
-                				cout << "Enter your choice: ";
-                				int searchChoice;
-                				cin >> searchChoice;
-
-                		if (searchChoice == 1) 
-						{
-                    		cout << "Enter food type (burger/pizza/cake/snack): ";
-                    		cin >> category;
-                		} 
-						else if (searchChoice == 2)
-						{
-                			system("cls");
-                    	break;
-               			} 
-						else 
-						{
-                    		cout << "Invalid choice! Please try again." << endl;
-                		}
-            		}
-        			
-				}
-						}  
+			                	vector<MenuItem> results = SearchItem::searchByCategory(menu, category);
+			                	displayMenu(results);
+			
+			                	cout << "1. Continue searching" << endl;
+			                	cout << "2. Back to menu" << endl;
+			                	cout << "Enter your choice: ";
+			                	int searchChoice;
+			                	cin >> searchChoice;
+			
+					            if (searchChoice == 1) 
+								{
+					                cout << "Enter food type (burger/pizza/cake/snack): ";
+					                cin >> category;
+					            } 
+									else if (searchChoice == 2)
+									{
+					                	system("cls");
+					                    break;
+					               	} 
+									else 
+									{
+					                    cout << "Invalid choice! Please try again." << endl;
+					                }
+            				}
+						}
 						else if (menuChoice == 3) 
 						{
                             while (true) 
@@ -818,6 +998,7 @@ public:
                                 string BeverageCode;
                                 int quantity;
 
+
                                 cout << "Enter the food code you wish to order: ";
                                 cin >> itemCode;
 
@@ -826,9 +1007,9 @@ public:
 								{
                                     MenuItem item = menuMap[itemCode];
                                     
-                                    cout << "----------------------------" << endl;
+        							cout << "*************************************" << endl;
                                     cout << item.name << endl;
-                                    cout << "----------------------------" << endl;
+        							cout << "*************************************" << endl;
 
                                     cout << "Enter the quantity: ";
                                     cin >> quantity;
@@ -836,41 +1017,63 @@ public:
                                     OrderItem orderItem = { item.name, quantity, item.price };
                                     orders.push_back(orderItem);
 
+
                                     cout << "Would you like to add a beverage? (yes/no): ";
                                     string addBeverage;
                                     cin >> addBeverage;
 																			
                                     if (addBeverage == "yes" || addBeverage == "YES") 
-									{    
-										cout << "***************************" << endl;
-                                        cout << "D01    Tea         RM 2.00     " << endl;
-                                        cout << "D02    Coffee      RM 3.00     " << endl;
-                                        cout << "***************************" << endl;
-                         
-                                        cout << "Enter the beverage code: ";
-                                        cin >> BeverageCode;
-                                        cout << "Enter the quantity: ";
-                                        cin >> quantity;
-
-                                        double beveragePrice = 0.0;
-                                        if (BeverageCode == "D01") 
+									{
+									    cout << "***************************" << endl;
+									    cout << "D01    Tea         RM 2.00     " << endl;
+									    cout << "D02    Coffee      RM 3.00     " << endl;
+									    cout << "D03    Juice       RM 3.50     " << endl;
+									    cout << "D04    Soft Drink  RM 2.50     " << endl;
+									    cout << "***************************" << endl;
+									
+									    cout << "Enter the beverage code: ";
+									    cin >> BeverageCode;
+									    cout << "Enter the quantity: ";
+									    cin >> quantity;
+									
+									
+									    double beveragePrice = 0.0;
+									    if (BeverageCode == "D01") 
 										{
-                                            beveragePrice = 2.00;
-                                        } 
+									        beveragePrice = 2.00;
+									    } 
 										else if (BeverageCode == "D02") 
 										{
-                                            beveragePrice = 3.00;
-                                        } 
+									        beveragePrice = 3.00;
+									    } 
+										else if (BeverageCode == "D03") 
+										{
+									        beveragePrice = 3.50;
+									    } 
+										else if (BeverageCode == "D04") 
+										{
+									        beveragePrice = 2.50;
+									    } 
 										else 
 										{
-                                            cout << "Invalid beverage code!" << endl;
-                                        }
+									        cout << "Invalid beverage code!" << endl;
+									    }
+									
+									    if (beveragePrice > 0.0) 
+										{
+									        OrderItem beverageOrder = { 
+									            (BeverageCode == "D01" ? "Tea" : 
+									            (BeverageCode == "D02" ? "Coffee" : 
+									            (BeverageCode == "D03" ? "Juice" : 
+									            (BeverageCode == "D04" ? "Soft Drink" : "Unknown Beverage")))), 
+									            quantity, 
+									            beveragePrice 
+									        };
+									        orders.push_back(beverageOrder);
+									    }
+									}
 
-                                        if (beveragePrice > 0.0) {
-                                            OrderItem beverageOrder = { (BeverageCode == "D01" ? "Tea" : "Coffee"), quantity, beveragePrice };
-                                            orders.push_back(beverageOrder);
-                                        }
-                                    }
+                                    
                                 } 
 								
 
@@ -895,7 +1098,7 @@ public:
 
                             
                         } 
-						else if (menuChoice == 4) 
+						else if(menuChoice == 4) 
 						{
                             break;
                         }
@@ -912,8 +1115,11 @@ public:
                 cout << "Enter admin password: ";
                 cin >> adminPassword;
 
+
                 if (admin.login(adminUsername, adminPassword)) {system("cls");
-                    while (true) {
+                    while (true) 
+					{
+						system("cls");
                         cout << "********************************" << endl;
                         cout << "          Admin Menu            " << endl;
                         cout << "********************************" << endl;
@@ -927,7 +1133,9 @@ public:
                         int adminChoice;
                         cin >> adminChoice;
 
-                        if (adminChoice == 1) {
+
+                        if (adminChoice == 1) 
+						{
                             MenuItem newItem;
                             cout << "Enter food code: ";
                             cin >> newItem.code;
@@ -941,7 +1149,9 @@ public:
                             admin.addMenuItem(menu, newItem);
                             menuMap[newItem.code] = newItem;
                             admin.saveMenuToFile(menu);
-                        } else if (adminChoice == 2) {
+                        } 
+						else if (adminChoice == 2) 
+						{
                             cout << "Enter the code of the item to edit: ";
                             string editCode;
                             cin >> editCode;
@@ -1002,6 +1212,7 @@ public:
         }
     }
 };
+
 
 int main() 
 {

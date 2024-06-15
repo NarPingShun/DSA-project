@@ -50,63 +50,48 @@ struct Order
 };
 
 
-
-class SearchItem 
-{
+class SearchItem {
 public:
-    static vector<MenuItem> searchByPriceRange(const vector<MenuItem>& menu, double minPrice, double maxPrice) {
+    // Static method to search by price range
+    static vector<MenuItem> searchByPrice(const vector<MenuItem>& menu, double minPrice, double maxPrice) {
         vector<MenuItem> result;
-        for (const auto& item : menu) 
-		{
-            if (item.price >= minPrice && item.price <= maxPrice) 
-			{
-                result.push_back(item);
-            }
+
+        // Binary search for items within the price range
+        auto it = lower_bound(menu.begin(), menu.end(), minPrice,
+            [](const MenuItem& menuItem, double minPrice) {
+                return menuItem.price < minPrice;
+            });
+
+        // Collect all items with prices within the range
+        while (it != menu.end() && it->price <= maxPrice) {
+            result.push_back(*it);
+            ++it;
         }
+
         return result;
     }
 
-    static vector<MenuItem> searchByCategory(const vector<MenuItem>& menu, const string& category) 
-	{
+    // Static method to search by category
+    static vector<MenuItem> searchByCategory(const vector<MenuItem>& menu, const string& category) {
         vector<MenuItem> result;
-        for (const auto& item : menu) 
-		{
-            if (item.category == category) 
-			{
-                result.push_back(item);
-            }
-        }
-        return result;
-    }
 
-    // Overloaded search function for searching by name
-    static vector<MenuItem> searchByName(const vector<MenuItem>& menu, const string& name) 
-	{
-        vector<MenuItem> result;
-        for (const auto& item : menu) 
-		{
-            if (item.name == name) 
-			{
-                result.push_back(item);
-            }
-        }
-        return result;
-    }
+        // Binary search for items with the given category
+        auto it = lower_bound(menu.begin(), menu.end(), category,
+            [](const MenuItem& menuItem, const string& category) {
+                return menuItem.category < category;
+            });
 
-    // Overloaded search function for searching by code
-    static vector<MenuItem> searchByCode(const vector<MenuItem>& menu, const string& code) 
-	{
-        vector<MenuItem> result;
-        for (const auto& item : menu) 
-		{
-            if (item.code == code) 
-			{
-                result.push_back(item);
-            }
+        // Collect all items with the same category
+        while (it != menu.end() && it->category == category) {
+            result.push_back(*it);
+            ++it;
         }
+
         return result;
     }
 };
+
+
 
 class Algorithm 
 {
@@ -772,6 +757,7 @@ void viewOrderHistory()
         cout << "------------------------------------------" << endl;
         cout << "Total Price: \t\t\tRM " << calculateTotalPrice() << endl;
         cout << "------------------------------------------\n" << endl;
+        
 		
 		saveReceiptToFile();
     }
@@ -865,15 +851,20 @@ public:
 	                    cin >> dineOption;
                 	}
                 	
-                    system("cls");
-
-                    cout << "****************************************************************************" << endl;
-                    cout << "                           Welcome to PS Fast Food!                         " << endl;
-                    cout << "****************************************************************************" << endl;
-
+					simulateLoading();
+					
+                    
                     while (true) 
 					{
-                        displayMenu(menu);
+                        system("cls");
+						
+                        cout << "****************************************************************************" << endl;
+                    	cout << "                           Welcome to PS Fast Food!                         " << endl;
+                    	cout << "****************************************************************************" << endl;
+                    	
+                    	displayMenu(menu);
+                        menu = originalMenu;
+                        
                         cout << "Choose an option:" << endl;
                         cout << "1. Sort by menu" << endl;
                         cout << "2. Search by menu" << endl;
@@ -903,119 +894,116 @@ public:
 								else if (userchoice == 2) 
 								{
 		                            Algorithm::bubbleSortMenuByPrice(menu);
-		                            
 								}
+								
 						}
-                        else if(menuChoice == 2)
-                        {
-                        	system("cls");
-                        	cout << "******************************************" << endl;
-                        	cout << "1. Search food by price range" << endl;
-                        	cout << "2. Search food by food type" << endl;
-                        	cout << "******************************************" << endl;
+						
+                        	    if(menuChoice == 2)
+                        		{
+		                        	// Sort the menu by price for binary search to work correctly
+    								sort(menu.begin(), menu.end(), [](const MenuItem& a, const MenuItem& b) {
+								    return a.price < b.price;
+								    });
 
-                        	cout << "Enter your choice: ";
-	                        int userchoice;
-	                        cin >> userchoice;
-	                        
-                        	if (userchoice == 1) 
-							{
-	                            double minPrice, maxPrice;
-	                            cout << "Enter minimum price: ";
-	                            cin >> minPrice;
-	                            cout << "Enter maximum price: ";
-	                            cin >> maxPrice;
-	                            
-	                            while (true) 
-								{
-		                            	vector<MenuItem> results = SearchItem::searchByPriceRange(menu, minPrice, maxPrice);
-		                            	displayMenu(results);
-		                            	
-		                            	cout << "1. Continue searching" << endl;
-		                				cout << "2. Back to menu" << endl;
-		                				cout << "Enter your choice: ";
-		                				int searchChoice;
-		                				cin >> searchChoice;
-
-				                		if (searchChoice == 1) {
-				                            cout << "Enter minimum price: ";
-				                            cin >> minPrice;
-				                            cout << "Enter maximum price: ";
-				                            cin >> maxPrice;
-				                		} 
-										else if (searchChoice == 2) 
-										{
-				                			system("cls");
-				                    		break;
-				               			}
-									   	else 
-									   	{
-			                    			cout << "Invalid choice! Please try again." << endl;
-			                			}
-		                			}
-								}
-		                } 
-						else if (menuChoice == 2) 
-						{
-			            	string category;
-			            	cout << "Enter food type (burger/pizza/cake/snack): ";
-			            	cin >> category;
-			            	while (true) 
-							{
-			                	vector<MenuItem> results = SearchItem::searchByCategory(menu, category);
-			                	displayMenu(results);
-			
-			                	cout << "1. Continue searching" << endl;
-			                	cout << "2. Back to menu" << endl;
-			                	cout << "Enter your choice: ";
-			                	int searchChoice;
-			                	cin >> searchChoice;
-			
-					            if (searchChoice == 1) 
-								{
-					                cout << "Enter food type (burger/pizza/cake/snack): ";
-					                cin >> category;
-					            } 
-									else if (searchChoice == 2)
+									    while (true) {
+									        system("cls");
+									        cout << "******************************************" << endl;
+									        cout << "1. Search food by price range" << endl;
+									        cout << "2. Search food by food type" << endl;
+									        cout << "******************************************" << endl;
+									
+									        cout << "Enter your choice: ";
+									        int userchoice;
+									        cin >> userchoice;
+									
+									        if (userchoice == 1) {
+									            double minPrice, maxPrice;
+									            cout << "Enter minimum price: ";
+									            cin >> minPrice;
+									            cout << "Enter maximum price: ";
+									            cin >> maxPrice;
+									
+									            while (true) {
+									                vector<MenuItem> results = SearchItem::searchByPrice(menu, minPrice, maxPrice);
+									                displayMenu(results);
+									
+									                cout << "1. Continue searching" << endl;
+									                cout << "2. Back to menu" << endl;
+									                cout << "Enter your choice: ";
+									                int searchChoice;
+									                cin >> searchChoice;
+									
+									                if (searchChoice == 1) {
+									                    cout << "Enter minimum price: ";
+									                    cin >> minPrice;
+									                    cout << "Enter maximum price: ";
+									                    cin >> maxPrice;
+									                } else if (searchChoice == 2) {
+									                    break;
+									                } else {
+									                    cout << "Invalid choice! Please try again." << endl;
+									                }
+									            }
+									        } else if (userchoice == 2) {
+									            string category;
+									            cout << "Enter food type (burger/pizza/cake/snack): ";
+									            cin >> category;
+									
+									            while (true) {
+									                vector<MenuItem> results = SearchItem::searchByCategory(menu, category);
+									                displayMenu(results);
+									
+									                cout << "1. Continue searching" << endl;
+									                cout << "2. Back to menu" << endl;
+									                cout << "Enter your choice: ";
+									                int searchChoice;
+									                cin >> searchChoice;
+									
+									                if (searchChoice == 1) {
+									                    cout << "Enter food type (burger/pizza/cake/snack): ";
+									                    cin >> category;
+									                } else if (searchChoice == 2) {
+									                    break;
+									                } else {
+									                    cout << "Invalid choice! Please try again." << endl;
+									                }
+									            }
+									        } else {
+									            cout << "Invalid choice! Please try again." << endl;
+									        }
+									    }
+									
+									    
+									}
+								   if (menuChoice == 3) 
 									{
-					                	system("cls");
-					                    break;
-					               	} 
-									else 
-									{
-					                    cout << "Invalid choice! Please try again." << endl;
-					                }
-            				}
-						}
-						else if (menuChoice == 3) 
-						{
-                            while (true) 
-							{
-                                system("cls");
-                                menu = originalMenu;
-                                displayMenu(menu);
-                                string itemCode;
-                                string BeverageCode;
-                                int quantity;
-
-
-                                cout << "Enter the food code you wish to order: ";
-                                cin >> itemCode;
-
-                                auto it = menuMap.find(itemCode);
-                            	if (it != menuMap.end())
-								{
-                                    MenuItem item = menuMap[itemCode];
-                                    
-        							cout << "*************************************" << endl;
-                                    cout << item.name << endl;
-        							cout << "*************************************" << endl;
-
-                                    cout << "Enter the quantity: ";
-                                    cin >> quantity;
-
-                                    OrderItem orderItem = { item.name, quantity, item.price };
-                                    orders.push_back(orderItem);
+				                            while (true) 
+											{
+				                                system("cls");
+				                                menu = originalMenu;
+				                                displayMenu(menu);
+				                                string itemCode;
+				                                string BeverageCode;
+				                                int quantity;
+				
+				
+				                                cout << "Enter the food code you wish to order: ";
+				                                cin >> itemCode;
+				
+				                                auto it = menuMap.find(itemCode);
+				                            	if (it != menuMap.end())
+												{
+				                                    MenuItem item = menuMap[itemCode];
+				                                    
+				        							cout << "*************************************" << endl;
+				                                    cout << item.name << endl;
+				        							cout << "*************************************" << endl;
+				
+				                                    cout << "Enter the quantity: ";
+				                                    cin >> quantity;
+				
+				                                    OrderItem orderItem = { item.name, quantity, item.price };
+				                                    orders.push_back(orderItem);
 
 
                                     cout << "Would you like to add a beverage? (yes/no): ";
@@ -1095,14 +1083,16 @@ public:
                                 }
                                 
                             }
-
-                            
+						
+ 
                         } 
-						else if(menuChoice == 4) 
+						else
 						{
                             break;
                         }
                     }
+                    
+            	  
                 }
             } 
 			else if (choice == 3) 
@@ -1210,7 +1200,7 @@ public:
                 break;
             }
         }
-    }
+	}
 };
 
 

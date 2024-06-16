@@ -43,13 +43,53 @@ struct Order
     string orderTime;
     time_t parsedOrderTime;
     double totalPrice; 
-
+    
     bool operator<(const Order &other) const {
         return parsedOrderTime < other.parsedOrderTime;
     }
 };
 
 
+class Stack {
+private:
+    vector<Order> stack;
+
+public:
+    void push(const Order& order) {
+        stack.push_back(order);
+    }
+
+    void pop() {
+        if (!stack.empty()) {
+            stack.pop_back();
+        } else {
+            cout << "Stack is empty!" << endl;
+        }
+    }
+
+    Order top() const {
+        if (!stack.empty()) {
+            return stack.back();
+        } else {
+            throw out_of_range("Stack is empty!");
+        }
+    }
+
+    bool isEmpty() const {
+        return stack.empty();
+    }
+
+    void display() const {
+        if (stack.empty()) {
+            cout << "No order history." << endl;
+            return;
+        }
+
+        for (const auto& order : stack) {
+            cout << "Customer: " << order.customerName << ", Dine Option: " << order.dineOption << ", Item: " << order.foodDetails << ", Quantity: " << order.quantity << ", Price: RM " << order.price << ", Order Time: " << order.orderTime << ", Total Price: RM " << order.totalPrice << endl;
+        }
+    }
+};
 
 class SearchItem 
 {
@@ -319,7 +359,8 @@ private:
     map<string, MenuItem> menuMap;
     vector<MenuItem> originalMenu;
     vector<OrderItem> orders;
-    stack<string> orderHistory; // Stack to store order history
+    Stack orderHistory;
+    //stack<string> orderHistory; // Stack to store order history
     string customerName;
 
     void loadMenu() 
@@ -376,32 +417,31 @@ private:
     }
 
     
-	void recordOrder(const string& customerName, const string& dineOption) 
-	{
+	void recordOrder(const string& customerName, const string& dineOption) {
     ofstream orderFile("orders.txt", ios::app);
-    if (!orderFile) 
-	{
+    if (!orderFile) {
         cerr << "Failed to open orders.txt" << endl;
         return;
     }
 
     auto now = chrono::system_clock::now();
     time_t orderTime = chrono::system_clock::to_time_t(now);
+    string orderTimeStr = ctime(&orderTime);
 
-    // Write each order to file
-    for (const auto& order : orders) 
-	{
-        orderFile << customerName << "," << dineOption << "," << order.item << "," << order.quantity << "," << order.price << "," << ctime(&orderTime);
-        // Add order details to order history
-        orderHistory.push(order.item + " x " + to_string(order.quantity) + " RM " + to_string(order.price));
+    // Write each order to file and push it to the stack
+    for (const auto& orderItem : orders) {
+        Order order = {customerName, dineOption, orderItem.item, orderItem.quantity, orderItem.price, orderTimeStr, orderTime, orderItem.quantity * orderItem.price};
+        
+        // Write to file
+        orderFile << customerName << "," << dineOption << "," << order.foodDetails << "," << order.quantity << "," << order.price << "," << order.orderTime;
+        
+        // Push to stack
+        orderHistory.push(order);
     }
-
-    // Calculate total price after writing orders to file
-    double totalPrice = calculateTotalPrice();
-
 
     orderFile.close();
 }
+
 
 void searchOrderByCustomerName() 
 {
@@ -1217,6 +1257,5 @@ int main()
     system.startOrdering();
     return 0;
 }
-
 
 

@@ -14,3 +14,4 @@ S13,Spicy Nuggets,snack,7.8
 S14,Crispy Tenders,snack,7.9
 S15,Bursting Shrimp poppers,snack,9.8
 S16,Cheesy Wedges,snack,8.9
+E17,mee,mee,10.5

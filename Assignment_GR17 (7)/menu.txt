@@ -1,0 +1,17 @@
+B01,Veggie burger,burger,20
+B02,Turkey burger,burger,25
+B03,Portobello mushroom burger,burger,18
+B04,Elk burger,burger,17
+P05,New York Style Pizza,pizza,21
+P06,Macho Meat Lover Pizza,pizza,23
+P07,Jumbo Deluxe Pizza,pizza,24
+P08,US Favourite Pizza,pizza,22
+C09,Vanilla Cupcake,cake,12
+C10,Muffin,cake,8
+C11,Red Velvet Cupcake,cake,15
+C12,Peanut Butter Cupcake,cake,10
+S13,Spicy Nuggets,snack,7.8
+S14,Crispy Tenders,snack,7.9
+S15,Bursting Shrimp poppers,snack,9.8
+S16,Cheesy Wedges,snack,8.9
+E17,mee,mee,10.5
